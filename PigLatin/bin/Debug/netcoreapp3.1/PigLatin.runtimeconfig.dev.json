@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\HoboPrime\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\HoboPrime\\.nuget\\packages"
+    ]
+  }
+}
