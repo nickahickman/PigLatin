@@ -55,9 +55,15 @@ namespace PigLatin
         }
         public static bool ContainsSpecialCharacters(string s)
         {
+            string allowedCharacters = "'.,!?";
+
             foreach (char c in s)
             {
-                if (!Char.IsLetterOrDigit(c) && !Char.IsWhiteSpace(c))
+                if (allowedCharacters.Contains(c))
+                {
+                    continue;
+                }
+                else if (!Char.IsLetterOrDigit(c) && !Char.IsWhiteSpace(c))
                 {
                     return true;
                 }
