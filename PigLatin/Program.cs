@@ -8,7 +8,6 @@ namespace PigLatin
     {
         static void Main(string[] args)
         {
-            string separator = "========================================================";
             Console.WriteLine("PigLatin translator");
 
             while (true)
@@ -17,7 +16,7 @@ namespace PigLatin
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(TranslateUserInput(userString));
                 Console.ResetColor();
-                Console.WriteLine(separator);
+                Console.WriteLine("========================================================");
 
                 if (!UserWantsToContinue())
                 {
