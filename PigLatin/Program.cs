@@ -44,7 +44,8 @@ namespace PigLatin
         {
             string workingString = s.ToLower();
 
-            if (ContainsSpecialCharacters(workingString) || ContainsNumbers(workingString)) {
+            if (ContainsSpecialCharacters(workingString) || ContainsNumbers(workingString))
+            {
                 return workingString;
             }
             else if (!IsMoreThanOneWord(s))
@@ -55,6 +56,28 @@ namespace PigLatin
             {
                 return TranslateSentence(workingString);
             }
+        }
+        public static bool ContainsSpecialCharacters(string s)
+        {
+            string allowedCharacters = "',.!?";
+
+            foreach (char c in s)
+            {
+                if (allowedCharacters.Contains(c))
+                {
+                    continue;
+                }
+                else if (!Char.IsLetterOrDigit(c) && !Char.IsWhiteSpace(c))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public static bool IsMoreThanOneWord(string s)
+        {
+            return s.Split(" ").Length > 1;
         }
         public static string TranslateSingleWord(string word)
         {
@@ -86,34 +109,24 @@ namespace PigLatin
                 }
             }
         }
+        public static string TranslateSentence(string sentence)
+        {
+            Array words = sentence.Split();
+            string translatedSentence = "";
+
+            foreach (string word in words)
+            {
+                translatedSentence += $"{TranslateSingleWord(word)} ";
+            }
+
+            return translatedSentence.Trim();
+        }
         public static string TranslateWordBeginningWithConsonant(string s, int firstVowelIndex)
         {
             string substringBeforeFirstVowel = s.Substring(0, firstVowelIndex);
             string substringWithFirstVowel = s.Substring(firstVowelIndex);
 
             return $"{substringWithFirstVowel}{substringBeforeFirstVowel}ay";
-        }
-        public static bool ContainsSpecialCharacters(string s)
-        {
-            string allowedCharacters = "',.!?";
-
-            foreach (char c in s)
-            {
-                if (allowedCharacters.Contains(c))
-                {
-                    continue;
-                }
-                else if (!Char.IsLetterOrDigit(c) && !Char.IsWhiteSpace(c))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-        public static bool IsMoreThanOneWord(string s)
-        {
-            return s.Split(" ").Length > 1;
         }
         public static bool EndsWithPunctuation(string s)
         {
@@ -141,7 +154,7 @@ namespace PigLatin
         }
         public static bool ContainsNumbers(string s)
         {
-            foreach (char c in s) 
+            foreach (char c in s)
             {
                 if (Char.IsDigit(c))
                 {
@@ -155,18 +168,6 @@ namespace PigLatin
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
             return s.IndexOfAny(vowels, 0);
-        }
-        public static string TranslateSentence(string sentence)
-        {
-            Array words = sentence.Split();
-            string translatedSentence = "";
-
-            foreach (string word in words)
-            {
-                translatedSentence += $"{TranslateSingleWord(word)} ";
-            }
-
-            return translatedSentence.Trim();
         }
         public static bool UserWantsToContinue()
         {
