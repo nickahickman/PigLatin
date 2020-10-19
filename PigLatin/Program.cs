@@ -53,9 +53,46 @@ namespace PigLatin
                 return TranslateSentence(workingString);
             }
         }
+        public static string TranslateSingleWord(string word)
+        {
+            int firstVowelIndex = FindIndexOfFirstVowel(word);
+
+            if (EndsWithPunctuation(word))
+            {
+                string punctuation = GetPunctuation(word);
+                word = TrimEndingPunctuation(word);
+
+                if (firstVowelIndex <= 0)
+                {
+                    return $"{word}way{punctuation}";
+                }
+                else
+                {
+                    return $"{TranslateWordBeginningWithConsonant(word, firstVowelIndex)}{punctuation}";
+                }
+            }
+            else
+            {
+                if (firstVowelIndex <= 0)
+                {
+                    return $"{word}way";
+                }
+                else
+                {
+                    return TranslateWordBeginningWithConsonant(word, firstVowelIndex);
+                }
+            }
+        }
+        public static string TranslateWordBeginningWithConsonant(string s, int firstVowelIndex)
+        {
+            string substringBeforeFirstVowel = s.Substring(0, firstVowelIndex);
+            string substringWithFirstVowel = s.Substring(firstVowelIndex);
+
+            return $"{substringWithFirstVowel}{substringBeforeFirstVowel}ay";
+        }
         public static bool ContainsSpecialCharacters(string s)
         {
-            string allowedCharacters = "'.,!?";
+            string allowedCharacters = "',.!?";
 
             foreach (char c in s)
             {
@@ -71,6 +108,34 @@ namespace PigLatin
 
             return false;
         }
+        public static bool IsMoreThanOneWord(string s)
+        {
+            return s.Split(" ").Length > 1;
+        }
+        public static bool EndsWithPunctuation(string s)
+        {
+            string punctuationChars = ".,!?";
+
+            foreach (char c in punctuationChars)
+            {
+                if (s.EndsWith(c))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static string TrimEndingPunctuation(string s)
+        {
+            char[] punctuationChars = { '.', ',', '!', '?' };
+            return s.TrimEnd(punctuationChars);
+        }
+        public static string GetPunctuation(string s)
+        {
+            int stringLength = s.Length;
+
+            return s.Substring(stringLength - 1);
+        }
         public static bool ContainsNumbers(string s)
         {
             foreach (char c in s) 
@@ -83,27 +148,10 @@ namespace PigLatin
 
             return false;
         }
-        public static bool IsMoreThanOneWord(string s)
-        {
-            return s.Split(" ").Length > 1;
-        }
         public static int FindIndexOfFirstVowel(string s)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
             return s.IndexOfAny(vowels, 0);
-        }
-        public static string TranslateSingleWord(string word)
-        {
-            int firstVowelIndex = FindIndexOfFirstVowel(word);
-
-            if (firstVowelIndex <= 0)
-            {
-                return $"{word}way";
-            }
-            else
-            {
-                return TranslateWordBeginningWithConsonant(word, firstVowelIndex);
-            }
         }
         public static string TranslateSentence(string sentence)
         {
@@ -116,13 +164,6 @@ namespace PigLatin
             }
 
             return translatedSentence.Trim();
-        }
-        public static string TranslateWordBeginningWithConsonant(string s, int firstVowelIndex)
-        {
-            string substringBeforeFirstVowel = s.Substring(0, firstVowelIndex);
-            string substringWithFirstVowel = s.Substring(firstVowelIndex);
-
-            return $"{substringWithFirstVowel}{substringBeforeFirstVowel}ay";
         }
         public static bool UserWantsToContinue()
         {
