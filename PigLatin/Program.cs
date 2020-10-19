@@ -30,11 +30,11 @@ namespace PigLatin
             string userResponse;
 
             Console.WriteLine(prompt);
-            userResponse = Console.ReadLine();
+            userResponse = Console.ReadLine().Trim();
 
             while (String.IsNullOrEmpty(userResponse))
             {
-                Console.WriteLine($"I need you to enter something. Silence isn't a virtue here!");
+                Console.WriteLine("I need you to enter something. Silence isn't a virtue here!");
                 userResponse = GetUserResponse(prompt);
             }
 
